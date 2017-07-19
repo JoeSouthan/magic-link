@@ -6,6 +6,7 @@ class LoginMailer < ApplicationMailer
   #   en.login_mailer.magic.subject
   #
   def magic(user)
+    @token = Knock::AuthToken.new(payload: { sub: user.id }).token
     mail to: user.email, subject: "Login?"
   end
 end
