@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
-  get 'magic', to: 'magic#show'
-
   root to: 'homepage#index'
-  resources :login, only: [:create, :index]
-  if Rails.env.development?
-    mount LetterOpenerWeb::Engine, at: '/letter_opener'
+  get 'magic', to: 'magic#show'
+  resources :login, only: [:create, :index] do
+    collection do
+      delete :destroy
+    end
   end
+
+  mount LetterOpenerWeb::Engine, at: '/letter_opener' if Rails.env.development?
 end

@@ -3,11 +3,18 @@ class LoginController < ApplicationController
   end
 
   def create
-    if login(login_params[:email], login_params[:password])
-      redirect_to root_path, notice: 'Logged in!'
+    user = User.find_by(email: login_params[:email])
+    if user
+      LoginMailer.magic(user).deliver_later
+      redirect_to root_path, notice: 'Check your email!'
     else
       render :index, notice: 'Fail'
     end
+  end
+
+  def destroy
+    logout
+    redirect_to root_path
   end
 
   private

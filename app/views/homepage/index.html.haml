@@ -2,6 +2,7 @@
 %p Find me in app/views/homepage/index.html.erb
 - if current_user
   %p Logged in!
+  = link_to 'Log out', login_index_path, method: :delete
 - else
   %p Not logged in!
   = link_to "log in", login_index_path
